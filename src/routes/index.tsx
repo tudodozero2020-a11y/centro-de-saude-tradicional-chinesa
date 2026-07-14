@@ -12,8 +12,8 @@ export const Route = createFileRoute("/")({
         content:
           "Medicina Tradicional Chinesa no Estoril. Terapias complementares, acupuntura, fitoterapia e cuidado personalizado com Zhou Yu Fang. Marque a sua consulta.",
       },
-      { property: "og:title", content: "Centro de Saúde de Medicina Tradicional Chinesa" },
-      { property: "og:description", content: "Cuidado natural, equilíbrio para o corpo e a mente. Estoril." },
+      { property: "og:title", content: "Centro de Saúde de Medicina Tradicional Chinesa — Estoril" },
+      { property: "og:description", content: "Medicina Tradicional Chinesa no Estoril. Terapias complementares, acupuntura, fitoterapia e cuidado personalizado com Zhou Yu Fang. Marque a sua consulta." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

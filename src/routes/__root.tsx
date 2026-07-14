@@ -81,12 +81,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Medicina Tradicional Chinesa no Estoril. Terapias complementares, acupuntura, fitoterapia e cuidado personalizado com Zhou Yu Fang.",
+          "Medicina Tradicional Chinesa no Estoril. Terapias complementares, acupuntura, fitoterapia e cuidado personalizado com Zhou Yu Fang. Marque a sua consulta.",
       },
-      { property: "og:title", content: "Centro de Saúde de Medicina Tradicional Chinesa" },
-      { property: "og:description", content: "Cuidado natural, equilíbrio para o corpo e a mente. Estoril." },
+      { property: "og:title", content: "Centro de Saúde de Medicina Tradicional Chinesa — Estoril" },
+      { property: "og:description", content: "Medicina Tradicional Chinesa no Estoril. Terapias complementares, acupuntura, fitoterapia e cuidado personalizado com Zhou Yu Fang. Marque a sua consulta." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Centro de Saúde de Medicina Tradicional Chinesa — Estoril" },
+      { name: "twitter:description", content: "Medicina Tradicional Chinesa no Estoril. Terapias complementares, acupuntura, fitoterapia e cuidado personalizado com Zhou Yu Fang. Marque a sua consulta." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f0fd3109-1160-435f-a12c-49ce2e92dc5b/id-preview-36155c79--5908f725-9af4-4c29-bf41-194f1f556b8c.lovable.app-1784035781800.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f0fd3109-1160-435f-a12c-49ce2e92dc5b/id-preview-36155c79--5908f725-9af4-4c29-bf41-194f1f556b8c.lovable.app-1784035781800.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
