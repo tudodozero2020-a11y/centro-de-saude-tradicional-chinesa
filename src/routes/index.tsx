@@ -131,10 +131,7 @@ function Hero() {
             e a mente.
           </h1>
           <p className="mt-8 max-w-lg text-lg leading-relaxed text-muted-foreground">
-            Centro de Saúde de Medicina Tradicional Chinesa. Terapias
-            complementares, acompanhamento personalizado e uma prática que
-            escuta cada corpo com atenção — pela consultora de saúde{" "}
-            <span className="text-jade-deep">Zhou Yu Fang</span>.
+            Centro de Saúde de Medicina Tradicional Chinesa; Terapias Complementares, Tratamento Personalizado; Uma Abordagem Médica Tradicional Focada no Bem-Estar Físico, Oferecida pela Consultora de Saúde <span className="text-jade-deep">Zhou Yufang</span>.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
@@ -195,8 +192,8 @@ function About() {
         <div className="flex flex-col justify-center">
           <div className="mb-4 text-xs uppercase tracking-[0.4em] text-gold">Sobre</div>
           <h2 className="font-display text-4xl leading-tight text-jade-deep sm:text-5xl">
-            Uma prática enraizada em milénios
-            <em className="not-italic text-gold"> de escuta.</em>
+            Uma medicina empírica com raízes em 5000 anos de prática
+            <em className="not-italic text-gold"> em milénio.</em>
           </h2>
           <div className="gold-divider my-8 max-w-[80px]" />
           <p className="text-lg leading-relaxed text-muted-foreground">
