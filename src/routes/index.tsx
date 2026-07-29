@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/hero.jpg";
-import aboutImg from "@/assets/about.jpg";
+import aboutAsset from "@/assets/zhou-yufang.webp.asset.json";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 export const Route = createFileRoute("/")({
@@ -175,8 +175,8 @@ function About() {
       <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
         <div className="relative">
           <img
-            src={aboutImg}
-            alt="Ervas e chá — medicina tradicional chinesa"
+            src={aboutAsset.url}
+            alt="Zhou Yu Fang, consultora de saúde de Medicina Tradicional Chinesa, no consultório"
             width={1200}
             height={1400}
             loading="lazy"
