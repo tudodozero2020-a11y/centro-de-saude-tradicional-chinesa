@@ -197,11 +197,11 @@ function About() {
           </h2>
           <div className="gold-divider my-8 max-w-[80px]" />
           <p className="text-lg leading-relaxed text-muted-foreground">
-            A consultora de saúde <span className="text-jade-deep">Zhou Yu Fang</span> acolhe
-            no Estoril quem procura uma abordagem natural e integrada ao
-            bem-estar. Guiada pelos princípios da Medicina Tradicional Chinesa,
-            trabalha o equilíbrio energético do corpo com terapias suaves,
-            fitoterapia e um olhar atento ao contexto de cada pessoa.
+            A Dra. Zhou Yufang tem muitos anos de experiência clínica em
+            medicina tradicional chinesa; tem uma experiência particularmente
+            vasta no tratamento do cancro, da diabetes e das suas complicações,
+            e possui uma fórmula familiar secreta para o tratamento da dor da
+            artrite (eficácia garantida).
           </p>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
             Cada consulta decorre num espaço tranquilo e livre de stress, com
