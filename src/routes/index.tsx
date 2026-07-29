@@ -46,8 +46,8 @@ const services = [
     icon: "☯",
   },
   {
-    title: "Casos Complexos",
-    desc: "Terapia complementar de suporte em condições complexas e situações crónicas prolongadas.",
+    title: "Bem-estar Feminino",
+    desc: "Ginecologia: Síndrome da menopausa, cancro do colo do útero, cancro do ovário, dismenorreia, infertilidade, doenças vulvares, prolapso uterino",
     icon: "✧",
   },
   {
