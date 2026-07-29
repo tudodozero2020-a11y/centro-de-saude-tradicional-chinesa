@@ -264,9 +264,6 @@ function Services() {
         </div>
 
         <p className="mx-auto mt-12 max-w-3xl text-center text-xs italic leading-relaxed text-muted-foreground">
-          Os serviços aqui apresentados são terapias complementares de
-          bem-estar e não substituem acompanhamento médico convencional. Não
-          são prometidos resultados de cura.
         </p>
       </div>
     </section>
