@@ -42,7 +42,7 @@ const services = [
   },
   {
     title: "Bem-estar Masculino",
-    desc: "Apoio em questões de próstata e cuidado personalizado para o bem-estar do homem.",
+    desc: "Andrologia: Disfunção erétil, ejaculação precoce, problemas de próstata e doenças sexualmente transmissiveis. cuidados para o bem-estar do homem.",
     icon: "☯",
   },
   {
