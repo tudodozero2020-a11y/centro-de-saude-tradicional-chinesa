@@ -27,17 +27,17 @@ const WA_URL =
 const services = [
   {
     title: "Medicina Interna",
-    desc: "Apoio em medicina interna, ginecologia, pediatria e cardiologia, com abordagem tradicional chinesa.",
+    desc: "Temos uma vasta experiência no tratamento das seguintes condições: doenças cardíacas, hemiplegia, doença de Parkinson, hipertensão, hiperglicemia, hiperlipidemia, hiperuricemia, uremia, cancro, hepatite B, SIDA e dependência de drogas.",
     icon: "◐",
   },
   {
     title: "Condições Crónicas",
-    desc: "Cuidado complementar em complicações diabéticas, hipertensão, flebite e uremia.",
+    desc: "Cuidado complementar em complicações diabetes e suas complicações, hipertensão, flebite e uremia.",
     icon: "❋",
   },
   {
     title: "Alívio de Dores",
-    desc: "Pescoço, ombros, costas, pernas, dores reumáticas e articulares, artrite.",
+    desc: "Pescoço, ombros, costas, pernas, dores reumáticas e articulares, artrite, trombose venosa profunda (sem amputação)",
     icon: "◈",
   },
   {
@@ -204,8 +204,9 @@ function About() {
             fitoterapia e um olhar atento ao contexto de cada pessoa.
           </p>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Cada sessão é um espaço calmo, sem pressa, onde o cuidado é
-            personalizado e o objetivo é sempre o mesmo: restaurar harmonia.
+            Cada consulta decorre num espaço tranquilo e livre de stress, com
+            atendimento personalizado e objetivos de tratamento sempre
+            alinhados, visando a restauração da saúde.
           </p>
           <ul className="mt-8 grid gap-3 text-sm text-jade-deep sm:grid-cols-2">
             {[
@@ -239,8 +240,8 @@ function Services() {
             <em className="not-italic text-gold"> de bem-estar.</em>
           </h2>
           <p className="mt-6 text-muted-foreground">
-            Cada serviço é oferecido como apoio complementar ao seu percurso de
-            saúde, com foco no alívio, cuidado e equilíbrio.
+            Cada serviço serve como um apoio complementar na sua jornada de
+            saúde, com foco no alívio da dor e na restauração da saúde.
           </p>
         </div>
 
