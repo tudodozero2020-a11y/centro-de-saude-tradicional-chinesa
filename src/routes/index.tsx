@@ -160,7 +160,7 @@ function Hero() {
             </div>
             <div>
               <div className="text-xs uppercase tracking-[0.3em] text-gold">Morada</div>
-              <div className="mt-1 text-jade-deep">Rua dos Cedros, N.º 188</div>
+              <div className="mt-1 text-jade-deep">Rua dos Cedros, N.º 188, Estoril</div>
             </div>
           </div>
         </div>
