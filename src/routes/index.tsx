@@ -156,7 +156,7 @@ function Hero() {
             </div>
             <div>
               <div className="text-xs uppercase tracking-[0.3em] text-gold">Telefone</div>
-              <div className="mt-1 text-jade-deep">964 666 595</div>
+              <div className="mt-1 text-jade-deep">+351&nbsp; 964 666 595</div>
             </div>
             <div>
               <div className="text-xs uppercase tracking-[0.3em] text-gold">Morada</div>
@@ -305,7 +305,7 @@ function LocationHours() {
               </dt>
               <dd className="mt-1 text-lg">
                 <a href="tel:+351964666595" className="hover:text-gold">
-                  964 666 595
+                  +351&nbsp; 964 666 595
                 </a>
               </dd>
             </div>
@@ -431,7 +431,7 @@ function Footer() {
             <li>Rua dos Cedros, N.º 188, Gabinete 3, Estoril</li>
             <li>
               <a href="tel:+351964666595" className="hover:text-gold">
-                964 666 595
+                +351&nbsp; 964 666 595
               </a>
             </li>
             <li>Horário: 10:00 – 18:00</li>
