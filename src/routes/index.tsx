@@ -431,7 +431,7 @@ function Footer() {
             <li>Rua dos Cedros, N.º 188, Gabinete 3, Estoril</li>
             <li>
               <a href="tel:+351964666595" className="hover:text-gold">
-                964 666 595
+                +351&nbsp; 964 666 595
               </a>
             </li>
             <li>Horário: 10:00 – 18:00</li>
