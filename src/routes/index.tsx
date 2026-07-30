@@ -77,12 +77,15 @@ const services = [
 ];
 
 function Home() {
+  const { data: content } = useSuspenseQuery(siteContentQuery);
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
       <Hero />
       <About />
       <Services />
+      <GalleryCarousel items={content.gallery} />
+      <Testimonials items={content.testimonials} />
       <LocationHours />
       <ContactForm />
       <Footer />
