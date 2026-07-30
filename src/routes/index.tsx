@@ -1,9 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import heroImg from "@/assets/hero.jpg";
 import aboutAsset from "@/assets/zhou-yufang.webp.asset.json";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { GalleryCarousel } from "@/components/GalleryCarousel";
+import { Testimonials } from "@/components/Testimonials";
+import { getSiteContent } from "@/lib/content.functions";
+
+const siteContentQuery = queryOptions({
+  queryKey: ["site-content"],
+  queryFn: () => getSiteContent(),
+});
 
 export const Route = createFileRoute("/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(siteContentQuery),
+  errorComponent: ({ error }) => (
+    <div role="alert" className="p-10 text-center text-muted-foreground">
+      {error.message}
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="p-10 text-center text-muted-foreground">Página não encontrada.</div>
+  ),
   head: () => ({
     meta: [
       { title: "Centro de Saúde de Medicina Tradicional Chinesa — Estoril" },
@@ -20,6 +38,7 @@ export const Route = createFileRoute("/")({
   }),
   component: Home,
 });
+
 
 const WA_URL =
   "https://wa.me/351964666595?text=" + encodeURIComponent("Olá, gostaria de marcar uma consulta.");
