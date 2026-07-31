@@ -53,7 +53,7 @@ export type Database = {
           content: string
           created_at: string
           id: string
-          image_path: string
+          image_path: string[]
           is_visible: boolean
           sort_order: number
           updated_at: string
@@ -63,7 +63,7 @@ export type Database = {
           content?: string
           created_at?: string
           id?: string
-          image_path?: string
+          image_path?: string[]
           is_visible?: boolean
           sort_order?: number
           updated_at?: string
@@ -73,7 +73,7 @@ export type Database = {
           content?: string
           created_at?: string
           id?: string
-          image_path?: string
+          image_path?: string[]
           is_visible?: boolean
           sort_order?: number
           updated_at?: string

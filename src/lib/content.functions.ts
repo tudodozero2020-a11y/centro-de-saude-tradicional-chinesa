@@ -11,7 +11,7 @@ export type TestimonialDTO = {
   id: string;
   authorName: string;
   content: string;
-  imageUrl: string;
+  imageUrls: string[];
 };
 
 export type SiteContentDTO = {
@@ -49,7 +49,7 @@ export const getSiteContent = createServerFn({ method: "GET" }).handler(
 
     const paths = [
       ...galleryRows.map((r) => r.image_path),
-      ...testimonialRows.map((r) => r.image_path),
+      ...testimonialRows.flatMap((r) => r.image_path ?? []),
     ].filter((p): p is string => Boolean(p));
 
     const urlByPath = new Map<string, string>();
@@ -73,7 +73,7 @@ export const getSiteContent = createServerFn({ method: "GET" }).handler(
         id: r.id,
         authorName: r.author_name ?? "",
         content: r.content ?? "",
-        imageUrl: urlByPath.get(r.image_path) ?? "",
+        imageUrls: (r.image_path ?? []).map((p) => urlByPath.get(p) ?? ""),
       })),
     };
   },

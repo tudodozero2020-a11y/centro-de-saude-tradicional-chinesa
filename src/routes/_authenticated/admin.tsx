@@ -32,7 +32,7 @@ type Tab = "gallery" | "testimonials";
 
 type Row = {
   id: string;
-  image_path: string;
+  image_paths: string[];
   title: string;
   description: string;
   sort_order: number;
@@ -40,9 +40,20 @@ type Row = {
 };
 
 function toRow(tab: Tab, r: Record<string, unknown>): Row {
+  const raw = r.image_path;
+  const paths =
+    tab === "testimonials"
+      ? Array.isArray(raw)
+        ? raw.map((p) => String(p)).filter(Boolean)
+        : raw
+          ? [String(raw)]
+          : []
+      : raw
+        ? [String(raw)]
+        : [];
   return {
     id: String(r.id),
-    image_path: String(r.image_path ?? ""),
+    image_paths: paths,
     title: String((tab === "gallery" ? r.title : r.author_name) ?? ""),
     description: String((tab === "gallery" ? r.description : r.content) ?? ""),
     sort_order: Number(r.sort_order ?? 0),
@@ -167,7 +178,7 @@ function ContentManager({ tab }: { tab: Tab }) {
         .order("created_at", { ascending: true });
       if (error) throw error;
       const rows = (data ?? []).map((r) => toRow(tab, r as Record<string, unknown>));
-      const paths = rows.map((r) => r.image_path).filter(Boolean);
+      const paths = rows.flatMap((r) => r.image_paths);
       const urls = new Map<string, string>();
       if (paths.length) {
         const { data: signed } = await supabase.storage
@@ -177,7 +188,10 @@ function ContentManager({ tab }: { tab: Tab }) {
           if (s.path && s.signedUrl) urls.set(s.path, s.signedUrl);
         }
       }
-      return rows.map((r) => ({ ...r, imageUrl: urls.get(r.image_path) ?? "" }));
+      return rows.map((r) => ({
+        ...r,
+        imageUrls: r.image_paths.map((p) => urls.get(p) ?? ""),
+      }));
     },
   });
 
@@ -186,7 +200,7 @@ function ContentManager({ tab }: { tab: Tab }) {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const [saving, setSaving] = useState(false);
 
   async function uploadImage(f: File) {
@@ -202,18 +216,19 @@ function ContentManager({ tab }: { tab: Tab }) {
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
-    if (tab === "gallery" && !file) {
+    if (tab === "gallery" && files.length === 0) {
       toast.error("Escolha uma imagem.");
       return;
     }
     setSaving(true);
     try {
-      const imagePath = file ? await uploadImage(file) : "";
+      const imagePaths: string[] = [];
+      for (const f of files) imagePaths.push(await uploadImage(f));
       const maxOrder = rows.reduce((m, r) => Math.max(m, r.sort_order), 0);
       const { error } = await supabase
         .from(labels.table as "gallery_items")
         .insert({
-          image_path: imagePath,
+          image_path: tab === "gallery" ? (imagePaths[0] ?? "") : imagePaths,
           sort_order: maxOrder + 1,
           is_visible: true,
           ...toColumns(tab, { title, description }),
@@ -221,7 +236,7 @@ function ContentManager({ tab }: { tab: Tab }) {
       if (error) throw error;
       setTitle("");
       setDescription("");
-      setFile(null);
+      setFiles([]);
       (document.getElementById(`file-${tab}`) as HTMLInputElement | null)?.value &&
         ((document.getElementById(`file-${tab}`) as HTMLInputElement).value = "");
       toast.success("Item adicionado.");
@@ -247,7 +262,7 @@ function ContentManager({ tab }: { tab: Tab }) {
     refresh();
   }
 
-  async function deleteRow(id: string, imagePath: string) {
+  async function deleteRow(id: string, imagePaths: string[]) {
     if (!confirm("Remover este item?")) return;
     const { error } = await supabase.from(labels.table as "gallery_items").delete().eq("id", id);
     if (error) {
@@ -255,9 +270,21 @@ function ContentManager({ tab }: { tab: Tab }) {
       toast.error("Não foi possível remover.");
       return;
     }
-    if (imagePath) await supabase.storage.from(BUCKET).remove([imagePath]);
+    if (imagePaths.length) await supabase.storage.from(BUCKET).remove(imagePaths);
     toast.success("Item removido.");
     refresh();
+  }
+
+  async function removeImage(row: Row, path: string) {
+    const next = row.image_paths.filter((p) => p !== path);
+    await updateRow(row.id, { image_path: next });
+    await supabase.storage.from(BUCKET).remove([path]);
+  }
+
+  async function addImages(row: Row, newFiles: File[]) {
+    const paths: string[] = [];
+    for (const f of newFiles) paths.push(await uploadImage(f));
+    await updateRow(row.id, { image_path: [...row.image_paths, ...paths] });
   }
 
   async function move(index: number, direction: -1 | 1) {
@@ -305,21 +332,30 @@ function ContentManager({ tab }: { tab: Tab }) {
           />
         </label>
         <label className="grid gap-2 text-sm text-jade-deep">
-          Imagem {tab === "testimonials" && "(opcional)"}
+          {tab === "testimonials" ? "Imagens (uma ou mais)" : "Imagem"}{" "}
+          {tab === "testimonials" && "(opcional)"}
           <input
             id={`file-${tab}`}
             type="file"
             accept="image/*"
-            onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+            multiple={tab === "testimonials"}
+            onChange={(e) =>
+              setFiles(Array.from(e.target.files ?? []).slice(0, tab === "testimonials" ? 20 : 1))
+            }
             className="rounded-sm border border-input bg-background px-4 py-2 text-sm outline-none focus:border-gold"
           />
         </label>
-        {file && (
-          <img
-            src={URL.createObjectURL(file)}
-            alt="Pré-visualização da imagem selecionada"
-            className="max-h-48 w-fit rounded-sm object-cover"
-          />
+        {files.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {files.map((f) => (
+              <img
+                key={f.name + f.size}
+                src={URL.createObjectURL(f)}
+                alt={`Pré-visualização de ${f.name}`}
+                className="max-h-40 w-fit rounded-sm object-cover"
+              />
+            ))}
+          </div>
         )}
         <button
           type="submit"
@@ -338,19 +374,58 @@ function ContentManager({ tab }: { tab: Tab }) {
         {rows.map((row, index) => (
           <article
             key={row.id}
-            className="grid gap-4 rounded-sm border border-jade-deep/10 bg-card p-6 shadow-soft sm:grid-cols-[160px_1fr]"
+            className="grid gap-4 rounded-sm border border-jade-deep/10 bg-card p-6 shadow-soft sm:grid-cols-[200px_1fr]"
           >
-            {row.imageUrl ? (
-              <img
-                src={row.imageUrl}
-                alt={row.title || "Imagem do item"}
-                className="aspect-[4/3] w-full rounded-sm object-cover"
-              />
-            ) : (
-              <div className="grid aspect-[4/3] w-full place-items-center rounded-sm bg-secondary text-xs text-muted-foreground">
-                Sem imagem
-              </div>
-            )}
+            <div className="grid gap-2">
+              {row.imageUrls.length > 0 ? (
+                <div className="grid grid-cols-2 gap-2">
+                  {row.imageUrls.map((url, i) => (
+                    <div key={row.image_paths[i]} className="group relative">
+                      <img
+                        src={url}
+                        alt={row.title || `Imagem ${i + 1}`}
+                        className="aspect-[4/3] w-full rounded-sm object-cover"
+                      />
+                      <button
+                        type="button"
+                        title="Remover esta imagem"
+                        onClick={() => removeImage(row, row.image_paths[i])}
+                        className="absolute right-1 top-1 grid h-5 w-5 place-items-center rounded-full bg-destructive text-[10px] text-white opacity-80 transition-opacity hover:opacity-100"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid aspect-[4/3] w-full place-items-center rounded-sm bg-secondary text-xs text-muted-foreground">
+                  Sem imagem
+                </div>
+              )}
+              {tab === "testimonials" && (
+                <label className="cursor-pointer rounded-sm border border-dashed border-jade-deep/30 px-3 py-2 text-center text-xs text-jade-deep transition-colors hover:bg-secondary">
+                  + Adicionar imagem
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={async (e) => {
+                      const added = Array.from(e.target.files ?? []);
+                      e.target.value = "";
+                      if (!added.length) return;
+                      try {
+                        await addImages(row, added);
+                        toast.success("Imagens adicionadas.");
+                      } catch (err) {
+                        console.error(err);
+                        toast.error("Não foi possível adicionar as imagens.");
+                      }
+                    }}
+                  />
+                </label>
+              )}
+            </div>
             <div className="grid gap-3">
               <input
                 type="text"
@@ -398,7 +473,7 @@ function ContentManager({ tab }: { tab: Tab }) {
                   ↓ Descer
                 </button>
                 <button
-                  onClick={() => deleteRow(row.id, row.image_path)}
+                  onClick={() => deleteRow(row.id, row.image_paths)}
                   className="rounded-full border border-destructive/40 px-4 py-2 text-destructive"
                 >
                   Remover
