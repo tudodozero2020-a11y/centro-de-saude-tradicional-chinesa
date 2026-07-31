@@ -8,8 +8,8 @@ import type { Database } from "@/integrations/supabase/types";
  * that need a user session — use `@/integrations/supabase/client` there.
  */
 export function createPublicSupabaseClient() {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+  const url = process.env.SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL;
+  const key = process.env.SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
   if (!url || !key) {
     throw new Error("Missing SUPABASE_URL or SUPABASE_PUBLISHABLE_KEY");

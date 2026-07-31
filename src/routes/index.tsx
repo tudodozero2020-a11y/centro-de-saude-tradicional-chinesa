@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import heroImg from "@/assets/hero.jpg";
-import aboutAsset from "@/assets/zhou-yufang.webp.asset.json";
+import aboutImg from "@/assets/about.jpg";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { GalleryCarousel } from "@/components/GalleryCarousel";
 import { Testimonials } from "@/components/Testimonials";
@@ -197,7 +197,7 @@ function About() {
       <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
         <div className="relative">
           <img
-            src={aboutAsset.url}
+            src={aboutImg}
             alt="Zhou Yu Fang, consultora de saúde de Medicina Tradicional Chinesa, no consultório"
             width={1200}
             height={1400}
