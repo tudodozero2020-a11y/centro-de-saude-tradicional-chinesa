@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import heroImg from "@/assets/hero.jpg";
-import aboutImg from "@/assets/about.jpg";
+import aboutImg from "@/assets/zhou-yufang.webp";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { GalleryCarousel } from "@/components/GalleryCarousel";
 import { Testimonials } from "@/components/Testimonials";
